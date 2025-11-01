@@ -1,0 +1,16 @@
+name: Deploy
+run-name: Deploy qxm
+on: [push, tag_push]
+jobs:
+  deploy:
+    runs-on: podman
+    steps:
+
+      - name: dependencies
+        run: apk add --no-cache podman
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: build
+        run: podman build -f Dockerfile
+      - name: push
+        run: podman tag qxm 192.168.0.234:8787/qxm:latest
