@@ -1,0 +1,45 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/ika/src/qxm/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+Color	event.go	/^	Color uint32$/;"	m	struct:main.Event	typeref:typename:uint32
+Date	event.go	/^	Date time.Time$/;"	m	struct:main.Event	typeref:typename:time.Time
+Desc	event.go	/^	Desc string$/;"	m	struct:main.Event	typeref:typename:string
+Environ	main.go	/^type Environ struct {$/;"	s	package:main
+Event	event.go	/^type Event struct {$/;"	s	package:main
+Event	user.go	/^	Event []Event$/;"	m	struct:main.User	typeref:typename:[]Event
+HttpInitServer	http.go	/^func HttpInitServer(db *gorm.DB, port string) (*HttpServer) {$/;"	f	package:main	typeref:typename:(*HttpServer)
+HttpListen	http.go	/^func (self *HttpServer) HttpListen() error {$/;"	f	struct:main.HttpServer	typeref:typename:error
+HttpServer	http.go	/^type HttpServer struct {$/;"	s	package:main
+ID	event.go	/^	ID uint$/;"	m	struct:main.Event	typeref:typename:uint
+Json	json.go	/^type Json interface {$/;"	i	package:main
+Model	event.go	/^	gorm.Model$/;"	M	struct:main.Event	typeref:typename:gorm.Model
+Model	user.go	/^	gorm.Model$/;"	M	struct:main.User	typeref:typename:gorm.Model
+Name	event.go	/^	Name string$/;"	m	struct:main.Event	typeref:typename:string
+Name	user.go	/^	Name string `json:"name"`$/;"	m	struct:main.User	typeref:typename:string
+Port	main.go	/^	Port         string;$/;"	m	struct:main.Environ	typeref:typename:string
+PostgresUrl	main.go	/^	PostgresUrl  string;$/;"	m	struct:main.Environ	typeref:typename:string
+RGBToColor	event.go	/^func (e *Event)RGBToColor(r uint8, g uint8, b uint8) {$/;"	f	struct:main.Event
+User	user.go	/^type User struct {$/;"	s	package:main
+UserID	event.go	/^	UserID uint$/;"	m	struct:main.Event	typeref:typename:uint
+authHandler	http.go	/^func (s *HttpServer) authHandler(w http.ResponseWriter, r *http.Request) {$/;"	f	struct:main.HttpServer
+db	http.go	/^	db *gorm.DB;$/;"	m	struct:main.HttpServer	typeref:typename:*gorm.DB
+httpOkHandler	http.go	/^func httpOkHandler(w http.ResponseWriter, r *http.Request) {$/;"	f	package:main
+main	event.go	/^package main;$/;"	p
+main	http.go	/^package main;$/;"	p
+main	json.go	/^package main;$/;"	p
+main	main.go	/^func main() {$/;"	f	package:main
+main	main.go	/^package main;$/;"	p
+main	user.go	/^package main;$/;"	p
+mux	http.go	/^	mux *mux.Router$/;"	m	struct:main.HttpServer	typeref:typename:*mux.Router
+ok	http.go	/^	ok bool `json:"ok"`$/;"	m	struct:main.okS	typeref:typename:bool
+okS	http.go	/^type okS struct {$/;"	s	package:main
+retry_timeout	main.go	/^const retry_timeout time.Duration = 1000000000 * 5;$/;"	c	package:main	typeref:typename:time.Duration
+s	http.go	/^	s *http.Server;$/;"	m	struct:main.HttpServer	typeref:typename:*http.Server

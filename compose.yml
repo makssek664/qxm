@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: "qqq"
+      POSTGRES_DB: qxm
+      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB} -h 127.0.0.1"]
+    ports:
+      - "5432:5432"
+  backend:
+    build: './'
+    environment:
+      DATABASE_URL: "postgres://root:qqq@db:5432/qxm?sslmode=disable"
+      PGHOST: db
+      PGPASSWORD: qqq
+      PGUSER: root
+      PGDATABASE: qxm
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_started
+        restart: true
+
