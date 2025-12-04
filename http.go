@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"errors"
 	"strconv"
+
 )
 
 type HttpServer struct {
@@ -24,6 +25,7 @@ type okS struct {
 	Ok bool `json:"ok"`
 }
 
+
 func httpOkHandler(w http.ResponseWriter, r *http.Request) {
 	ok := &okS{Ok : true};
 	okb, _ := json.Marshal(ok)
@@ -32,6 +34,12 @@ func httpOkHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HttpServer) authHandler(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Access-Control-Allow-Headers", "*")
+	if r.Method == http.MethodOptions {
+        return
+    }
+
 	u := &User{}
 	r.Body = http.MaxBytesReader(w, r.Body, 1024*1024);
 	defer r.Body.Close()
@@ -81,6 +89,12 @@ func (s *HttpServer) authHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HttpServer) addEventToUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+    if r.Method == http.MethodOptions {
+        return
+    }
+
 	e := &Event{}
 	vars := mux.Vars(r)
 	strid, ok := vars["user_id"]
@@ -143,6 +157,12 @@ func (s *HttpServer) addEventToUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HttpServer) getAllEventsUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+    if r.Method == http.MethodOptions {
+        return
+    }
+
 	es := []Event{}	
 	
 	vars := mux.Vars(r)
@@ -184,6 +204,10 @@ func (s *HttpServer) getAllEventsUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HttpServer) getEventByIDUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+    if r.Method == http.MethodOptions {
+        return
+    }
 	e := &Event{}	
 	
 	vars := mux.Vars(r)
@@ -231,6 +255,11 @@ func (s *HttpServer) getEventByIDUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HttpServer) setEventByIDUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+    if r.Method == http.MethodOptions {
+        return
+    }
 	e := &Event{}
 	vars := mux.Vars(r)
 	user_id, ok := vars["user_id"]
@@ -288,6 +317,12 @@ func (s *HttpServer) setEventByIDUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *HttpServer) removeEventByIDUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+    if r.Method == http.MethodOptions {
+        return
+    }
+
 	e := &Event{}
 	vars := mux.Vars(r)
 	user_id, ok := vars["user_id"]
@@ -340,12 +375,13 @@ func HttpInitServer(db *gorm.DB, port string) (*HttpServer) {
 	h.db = db;
 	h.mux = mux.NewRouter()
 	h.mux.HandleFunc("/ok", httpOkHandler)
-	h.mux.HandleFunc("/auth", h.authHandler).Methods("POST")
-	h.mux.HandleFunc("/events/add/{user_id}", h.addEventToUser).Methods("POST")
-	h.mux.HandleFunc("/events/get/{user_id}/all", h.getAllEventsUser).Methods("POST")
-	h.mux.HandleFunc("/events/get/{user_id}/{event_id}", h.getEventByIDUser).Methods("POST")
-	h.mux.HandleFunc("/events/set/{user_id}/{event_id}", h.setEventByIDUser).Methods("POST")
-	h.mux.HandleFunc("/events/rm/{user_id}/{event_id}", h.removeEventByIDUser).Methods("POST")
+	h.mux.HandleFunc("/auth", h.authHandler).Methods("POST", "OPTIONS")
+	h.mux.HandleFunc("/events/add/{user_id}", h.addEventToUser).Methods("POST", "OPTIONS")
+	h.mux.HandleFunc("/events/get/{user_id}/all", h.getAllEventsUser).Methods("POST", "OPTIONS")
+	h.mux.HandleFunc("/events/get/{user_id}/{event_id}", h.getEventByIDUser).Methods("POST", "OPTIONS")
+	h.mux.HandleFunc("/events/set/{user_id}/{event_id}", h.setEventByIDUser).Methods("POST", "OPTIONS")
+	h.mux.HandleFunc("/events/rm/{user_id}/{event_id}", h.removeEventByIDUser).Methods("POST", "OPTIONS")
+	h.mux.Use(mux.CORSMethodMiddleware(h.mux))
 
 	h.s = &http.Server{
 		Addr:	fmt.Sprintf(":%s", port),
